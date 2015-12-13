@@ -24,6 +24,7 @@
 (defn hud-control-bar
   [& children]
   (into [:div {:style {:height "47px"
+                       :overflow "hidden"
                        :border-bottom (str "2px solid " c/base03)}}] children))
 
 (defn hud-title
@@ -43,25 +44,32 @@
                  :position "relative"
                  :border (str "2px solid " c/base03)}}
    [:span {:style {:color c/cyan
+                   :width "60px"
                    :display "inline-block"
                    :padding "5px 0 5px 10px "
                    :font-weight "bold"}} "Path: "]
-   [:input {:style {:width "500px"
-                    :vertical-align "top"
-                    :height "100%"
-                    :font-size "1em"
-                    :padding "5px"
-                    :display "inline-block"
-                    :font-weight "bold"
-                    :color c/blue
-                    :border-top-right-radius "5px"
-                    :background-color c/base2
-                    :border-bottom-right-radius "5px"}
+   [:div {:style {:width "500px"
+                  :height "100%"
+                  :display "inline-block"
+                  :vertical-align "top"
+                  }}
+    [:input {:style {
+                     :position "absolute"
+                     :top "0"
+                     :height "calc(100% - 14px)"
+                     :width "487px"
+                     :padding "5px"
+                     :display "block"
+                     :font-weight "bold"
+                     :color c/blue
+                     :border-top-right-radius "5px"
+                     :background-color c/base2
+                     :border-bottom-right-radius "5px"}
             :auto-focus true
             :type "text"
             :list "hud-suggestions"
             :default-value (apply pr-str path)
-            :on-change (partial e/update-path! db)}]
+            :on-change (partial e/update-path! db)}]]
    (into [:datalist#hud-suggestions]
          (for [s (p/suggestions db path)] [:option {:value s}]))])
 
@@ -72,13 +80,14 @@
 (defn hud-copy-control
   [db]
   [:button {:on-click #(e/copy-to-clipboard db)
-            :style {:float "right"
+            :style {;:float "right"
                     :display "inline-block"
                     :margin "8px 5px"
                     :cursor "pointer"
                     :padding "5px 10px"
-                    :font-size "1em"
                     :background-color c/base03
+                    ; :font-weight "bold"
+                    ; :font-size "1em"
                     :color c/cyan
                     :border-radius "5px"}} "copy"])
 

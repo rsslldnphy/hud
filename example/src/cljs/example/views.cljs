@@ -11,6 +11,7 @@
   (let [name (re-frame/subscribe [:name])]
     (fn []
       [:div (str "Hello from " @name ". This is the Home Page.")
+       [:h1 "Press Ctrl+Enter to toggle the HUD."]
        [:div [:a {:href "#/about"} "go to About Page"]]])))
 
 
@@ -19,6 +20,7 @@
 (defn about-panel []
   (fn []
     [:div "This is the About Page."
+     [:h1 "Press Ctrl+Enter to toggle the HUD."]
      [:div [:a {:href "#/"} "go to Home Page"]]]))
 
 
@@ -32,6 +34,5 @@
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [:active-panel])]
     (fn []
-      [:div [hud/hud {:font-family "Roboto Mono, monospace"
-                      :collapse-threshold 2 } @db/app-db]
+      [:div [hud/hud {:font-family "Roboto Mono"} @db/app-db]
        (panels @active-panel)])))

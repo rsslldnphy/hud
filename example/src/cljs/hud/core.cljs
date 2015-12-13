@@ -28,7 +28,8 @@
               [v/hud-control-bar
                [v/hud-title]
                [v/hud-path-control db path]
+               [v/hud-copy-control]
                [v/hud-path-summary path]
-               [v/hud-copy-control]]
+               ]
               [v/hud-display
                [r/render db* opts 0]]])]))})))

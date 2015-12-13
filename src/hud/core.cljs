@@ -21,7 +21,6 @@
         (let [path @s/path
               db*  (p/fetch-path db path)
               opts (merge o/default-opts opts)]
-          (println (type (:active-panel db)))
           [:div
            (when @s/open?
              [v/hud-outer opts
