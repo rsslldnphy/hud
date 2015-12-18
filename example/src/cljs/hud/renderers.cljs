@@ -57,7 +57,7 @@
               [right-brace open?]))
       [:span [left-brace open?] [ellipsis open?] [right-brace open?]])
 
-    (or (vector? e) (list? e))
+    (or (vector? e) (list? e) (seq? e))
     (if open?*
       (conj (into [:span [left-square-bracket open?] [render (first e) opts (+ 1 indent)] (when (not-empty (rest e)) br)]
                   (interpose br (mapv #(with-indentation (+ 1 indent) [render % opts (+ 1 indent)]) (rest e))))

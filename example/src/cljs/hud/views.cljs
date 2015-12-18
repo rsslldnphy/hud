@@ -7,6 +7,7 @@
 (defn hud-outer
   [{:keys [font-family] :as opts} & children]
   (into [:div.hud {:style {:position "fixed"
+                           :z-index 9999
                            :top 0
                            :left 0
                            :right 0
@@ -44,7 +45,6 @@
                  :position "relative"
                  :border (str "2px solid " c/base03)}}
    [:span {:style {:color c/cyan
-                   :width "60px"
                    :display "inline-block"
                    :padding "5px 0 5px 10px "
                    :font-weight "bold"}} "Path: "]
@@ -53,11 +53,8 @@
                   :display "inline-block"
                   :vertical-align "top"
                   }}
-    [:input {:style {
-                     :position "absolute"
-                     :top "0"
-                     :height "calc(100% - 14px)"
-                     :width "487px"
+    [:input {:style {:width "100%"
+                     :max-height "100%"
                      :padding "5px"
                      :display "block"
                      :font-weight "bold"
@@ -80,14 +77,13 @@
 (defn hud-copy-control
   [db]
   [:button {:on-click #(e/copy-to-clipboard db)
-            :style {;:float "right"
+            :style {:float "right"
                     :display "inline-block"
                     :margin "8px 5px"
                     :cursor "pointer"
                     :padding "5px 10px"
                     :background-color c/base03
-                    ; :font-weight "bold"
-                    ; :font-size "1em"
+                    :font-weight "bold"
                     :color c/cyan
                     :border-radius "5px"}} "copy"])
 

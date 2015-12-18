@@ -13,6 +13,8 @@
 
 (def left-brace           (partial punctuation "{"))
 (def right-brace          (partial punctuation "}"))
+(def left-bracket         (partial punctuation "("))
+(def right-bracket        (partial punctuation ")"))
 (def left-square-bracket  (partial punctuation "["))
 (def right-square-bracket (partial punctuation "]"))
 (def hash-sign            (partial punctuation "#"))
@@ -71,6 +73,13 @@
                     (interpose " " (mapv #(with-indentation 0 [render % opts (+ 2 indent)]) (rest e))))
               [right-brace open?]))
       [:span [hash-sign open?] [left-brace open?] [ellipsis open?] [right-brace open?]])
+
+    (seq e)
+    (if open?*
+      (conj (into [:span [left-bracket open?] [render (first e) opts (+ 1 indent)] (when (not-empty (rest e)) br)]
+                  (interpose br (mapv #(with-indentation (+ 1 indent) [render % opts (+ 1 indent)]) (rest e))))
+            [right-bracket open?])
+      [:span [left-bracket open?] [ellipsis open?] [right-bracket open?]])
 
     :else
     [:span (pr-str e)])))
