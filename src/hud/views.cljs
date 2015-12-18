@@ -7,6 +7,7 @@
 (defn hud-outer
   [{:keys [font-family] :as opts} & children]
   (into [:div.hud {:style {:position "fixed"
+                           :z-index 9999
                            :top 0
                            :left 0
                            :right 0
