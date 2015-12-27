@@ -54,14 +54,14 @@
     (map? e)
     (if open?*
       (let [e (sort-by first e)]
-        (conj (into [:span [left-brace open?] [map-entry (first e) opts 0] (when (not-empty (rest e)) br)]
+        (conj (into [:span [left-brace open?] (when (not-empty e) [map-entry (first e) opts (+ 2 indent)]) (when (not-empty (rest e)) br)]
                     (interpose br (mapv #(with-indentation (+ 1 indent) (map-entry % opts (+ 2 indent))) (rest e))))
               [right-brace open?]))
       [:span [left-brace open?] [ellipsis open?] [right-brace open?]])
 
     (or (vector? e) (list? e))
     (if open?*
-      (conj (into [:span [left-square-bracket open?] [render (first e) opts (+ 1 indent)] (when (not-empty (rest e)) br)]
+      (conj (into [:span [left-square-bracket open?] (when (not-empty e) [render (first e) opts (+ 1 indent)]) (when (not-empty (rest e)) br)]
                   (interpose br (mapv #(with-indentation (+ 1 indent) [render % opts (+ 1 indent)]) (rest e))))
             [right-square-bracket open?])
       [:span [left-square-bracket open?] [ellipsis open?] [right-square-bracket open?]])
@@ -69,17 +69,20 @@
     (set? e)
     (if open?*
       (let [e (sort e)]
-        (conj (into [:span [hash-sign open?] [left-brace open?] [render (first e) opts (+ 2 indent)] (when (not-empty (rest e)) " ")]
+        (conj (into [:span [hash-sign open?] [left-brace open?] (when (not-empty e) [render (first e) opts (+ 2 indent)]) (when (not-empty (rest e)) " ")]
                     (interpose " " (mapv #(with-indentation 0 [render % opts (+ 2 indent)]) (rest e))))
               [right-brace open?]))
       [:span [hash-sign open?] [left-brace open?] [ellipsis open?] [right-brace open?]])
 
-    (seq e)
+    (seq? e)
     (if open?*
-      (conj (into [:span [left-bracket open?] [render (first e) opts (+ 1 indent)] (when (not-empty (rest e)) br)]
+      (conj (into [:span [left-bracket open?] (when (not-empty e) [render (first e) opts (+ 1 indent)]) (when (not-empty (rest e)) br)]
                   (interpose br (mapv #(with-indentation (+ 1 indent) [render % opts (+ 1 indent)]) (rest e))))
             [right-bracket open?])
       [:span [left-bracket open?] [ellipsis open?] [right-bracket open?]])
+
+    (contains? #{true false nil} e)
+    [:span {:style {:color c/green}} (pr-str e)]
 
     :else
     [:span (pr-str e)])))

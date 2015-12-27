@@ -11,27 +11,24 @@
 (def toggle (toggle-fn s/open?))
 
 (def ENTER 13)
+(def ESC   27)
 
-(defn enter?
+(defn ctrl-one?
   [e]
-  (= ENTER (.-keyCode e)))
-
-(defn ctrl-enter?
-  [e]
-  (and (= ENTER (.-keyCode e))
+  (and (= 49 (.-keyCode e))
        (.-ctrlKey e)))
 
 (defn key-handler
   [e]
-  (when (ctrl-enter? e) (toggle)))
+  (when (ctrl-one? e) (toggle)))
 
 (defn listen!
   []
-  (e/listen js/document e/EventType.KEYPRESS key-handler))
+  (e/listen js/document e/EventType.KEYUP key-handler))
 
 (defn unlisten!
   []
-  (e/unlisten js/document e/EventType.KEYPRESS key-handler))
+  (e/unlisten js/document e/EventType.KEYUP key-handler))
 
 (defn update-path!
   [db e]

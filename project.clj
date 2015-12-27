@@ -1,4 +1,4 @@
-(defproject hud "0.1.0"
+(defproject hud "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure       "1.7.0"   :provided true]
                  [org.clojure/clojurescript "1.7.170" :provided true]
                  [reagent                   "0.5.1"   :provided true]]

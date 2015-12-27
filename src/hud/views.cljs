@@ -17,7 +17,7 @@
                            :overflow "hidden"
                            :white-space "pre"
                            :font-family font-family
-                           :height "50vh"
+                           :height "70vh"
                            :border-bottom (str "2px solid " c/base03)
                            :border-bottom-left-radius "10px"
                            :border-bottom-right-radius "10px"}}] children))

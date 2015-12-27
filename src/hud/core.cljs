@@ -31,3 +31,7 @@
                [v/hud-copy-control]]
               [v/hud-display
                [r/render db* opts 0]]])]))})))
+
+(defn re-frame-hud
+  []
+  [hud @re-frame.db/app-db])
